@@ -33,6 +33,9 @@ def im2binimage(im, conversion="threshold"):
         fixed_width = config.width
     if (len(im.shape) != 2):
         im = ski.color.rgb2gray(im)
+    print("checkpoint")
+    print(im.shape[0])
+    print(im.shape[1])
     im = ski.transform.resize(im, (round( fixed_width /im.shape[1]  * im.shape[0]), fixed_width))
     if conversion == "threshold":
         ret = (im < ski.filters.threshold_li(im)).astype(int)
@@ -43,7 +46,9 @@ def im2binimage(im, conversion="threshold"):
     return ret
 
 # this is straight from https://github.com/tgray/hyperdither
-@numba.jit
+
+# commented by Ziyu0502, got a bug, possibly due to the lack of cuda/GPU on this test machine
+# @numba.jit
 def dither(num, thresh = 127):
     derr = np.zeros(num.shape, dtype=int)
 
@@ -102,7 +107,8 @@ def im2binimage2(im):
     m2 = dither(m)
     # out = Image.fromarray(m2[::-1,:]).convert('1')
     out = Image.fromarray(m2[::-1,:])
-    out.show()
+    # commented by Ziyu0502 because there is another .show() below, which conlicts at run-time
+    # out.show()
     # the ditherer is stupid and does not make black and white images, just... almost so this fixes that
     enhancer = ImageEnhance.Contrast(out)
     enhanced_img = enhancer.enhance(4.0)
@@ -111,10 +117,16 @@ def im2binimage2(im):
     # blackandwhite_img = enhanced_img.convert('1')
     # blackandwhite_img.show()
     np_img = np.array(enhanced_img).astype(int)
+
     # flipping the ones and zeros
-    np_img[np_img == 1] = 100
+    # has a bug: np_img only has 255 and 0
+
+    # np_img[np_img == 1] = 100
+    # np_img[np_img == 0] = 1
+    # np_img[np_img == 100] = 0
+
     np_img[np_img == 0] = 1
-    np_img[np_img == 100] = 0
+    np_img[np_img == 255] = 0
 
     return binimage2bitstream(np_img)
 

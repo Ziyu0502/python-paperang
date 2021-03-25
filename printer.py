@@ -34,6 +34,6 @@ if __name__=="__main__":
     
     # mmj.print_self_test()
 
-    # mmj.print_image_file("/home/ziyu/Pictures/s.png")
+    mmj.print_image_file("/home/ziyu/Pictures/s.png")
 
-    mmj.print_dithered_image("/home/ziyu/Pictures/s.png")
+    # mmj.print_dithered_image("/home/ziyu/Pictures/s.png")
