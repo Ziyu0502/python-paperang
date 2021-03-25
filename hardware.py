@@ -46,7 +46,7 @@ class Paperang:
     def scandevices(self):
         logging.warning("Searching for devices...\n"
                         "This will take some time; consider specifing a mac address to avoid a scan.")
-        valid_names = ['MiaoMiaoJi', 'Paperang', 'Paperang_P2S']
+        valid_names = ['MiaoMiaoJi', 'Paperang', 'Paperang_P2S', 'Paperang_C1']
         nearby_devices = discover_devices(lookup_names=True)
         valid_devices = list(filter(lambda d: len(d) == 2 and d[1] in valid_names, nearby_devices))
         if len(valid_devices) == 0:

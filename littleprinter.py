@@ -20,7 +20,7 @@ class Paperang_Printer:
             self.printer_hardware.sendImageToBt(image_data.sirius(path))
 
 if __name__ == '__main__':
-    mmj=Paperang_Printer()
+    mmj = Paperang_Printer()
     # `sirius-client` will write to this folder
     tmpdir = os.path.join(tempfile.gettempdir(), 'sirius-client')
     Path(tmpdir).mkdir(parents=True, exist_ok=True)

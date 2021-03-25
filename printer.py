@@ -16,22 +16,24 @@ class Paperang_Printer:
         print("attempting test print to MAC address \"% s\""% config.macaddress)
         if self.printer_hardware.connected:
             self.printer_hardware.sendSelfTestToBt()
+            self.printer_hardware.sendPaperTypeToBt(paperType=0)
 
     def print_image_file(self, path):
         if self.printer_hardware.connected:
+            self.printer_hardware.sendPaperTypeToBt(paperType=0)
             self.printer_hardware.sendImageToBt(image_data.binimage2bitstream(
                 image_data.im2binimage(ski.io.imread(path),conversion="threshold")))
     
     def print_dithered_image(self, path):
         if self.printer_hardware.connected:
+            self.printer_hardware.sendPaperTypeToBt(paperType=0)
             self.printer_hardware.sendImageToBt(image_data.im2binimage2(path))
 
 if __name__=="__main__":
-    mmj=Paperang_Printer()
-    mmj.print_self_test()
-    # mmj.print_image_file("whatever")
-    # mmj.print_dithered_image("/Users/ktamas/Downloads/frame.png")
-    # mmj.print_dithered_image("/Users/ktamas/Pictures/hard-job-being-a-baby.jpeg")
-    # mmj.print_dithered_image("/Users/ktamas/Desktop/-km49qIJ_400x400.png")
-    # mmj.print_dithered_image("/Users/ktamas/Downloads/10827905_10152921795874452_6300515507948976079_o.jpg")
-    # mmj.print_dithered_image("/Users/ktamas/Downloads/10827905_10152921795874452_6300515507948976079_o.jpg")
+    mmj = Paperang_Printer()
+    
+    # mmj.print_self_test()
+
+    # mmj.print_image_file("/home/ziyu/Pictures/s.png")
+
+    mmj.print_dithered_image("/home/ziyu/Pictures/s.png")

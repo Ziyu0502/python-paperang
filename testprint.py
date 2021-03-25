@@ -20,6 +20,7 @@ class Paperangg_Printer:
     def print_self_test(self):
         if self.printer_hardware.connected:
             self.printer_hardware.sendSelfTestToBt()
+            self.printer_hardware.sendPaperTypeToBt(paperType=1)
             self.printer_hardware.disconnect()
         else:
             print("printer not connected.")
@@ -29,5 +30,5 @@ class Paperangg_Printer:
             self.printer_hardware.sendImageToBt(image_data.sirius(path))
 
 if __name__ == '__main__':
-    mmj=Paperangg_Printer()
+    mmj = Paperangg_Printer()
     mmj.print_self_test()
